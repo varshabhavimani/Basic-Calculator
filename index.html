@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stylish CASIO Calculator</title>
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #fff;
+        }
+
+        .calculator {
+            background: #130101;
+            border-radius: 15px;
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+            width: 350px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .brand {
+            font-size: 1.5em;
+            font-weight: bold;
+            font-style: italic;
+            /* Italics added */
+            color: #ff9500;
+            margin-bottom: 15px;
+        }
+
+        .display {
+            background: #f8f8f8;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.8em;
+            text-align: right;
+            padding: 15px;
+            margin-bottom: 25px;
+            width: 100%;
+            box-sizing: border-box;
+            color: #333;
+        }
+
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.5em;
+            padding: 15px;
+            cursor: pointer;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, background-color 0.3s ease;
+        }
+
+        button:hover {
+            background: #0056b3;
+            transform: scale(1.1);
+        }
+
+        .operator {
+            background: #ff9500;
+        }
+
+        .operator:hover {
+            background: #cc7600;
+        }
+
+        button:active {
+            transform: scale(1);
+            box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+        }
+
+        button.clear {
+            background: #e63946;
+        }
+
+        button.clear:hover {
+            background: #a62632;
+        }
+
+        button.equal {
+            background: #2dce89;
+            grid-column: span 4;
+        }
+
+        button.equal:hover {
+            background: #219653;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="calculator">
+        <div class="brand">CASIO</div>
+        <input type="text" id="display" class="display" disabled />
+        <div class="buttons">
+            <button onclick="appendValue('7')">7</button>
+            <button onclick="appendValue('8')">8</button>
+            <button onclick="appendValue('9')">9</button>
+            <button class="operator" onclick="appendValue('/')">/</button>
+
+            <button onclick="appendValue('4')">4</button>
+            <button onclick="appendValue('5')">5</button>
+            <button onclick="appendValue('6')">6</button>
+            <button class="operator" onclick="appendValue('*')">*</button>
+
+            <button onclick="appendValue('1')">1</button>
+            <button onclick="appendValue('2')">2</button>
+            <button onclick="appendValue('3')">3</button>
+            <button class="operator" onclick="appendValue('-')">-</button>
+
+            <button onclick="appendValue('0')">0</button>
+            <button onclick="appendValue('.')">.</button>
+            <button class="clear" onclick="clearDisplay()">C</button>
+            <button class="operator" onclick="appendValue('+')">+</button>
+
+            <button class="equal" onclick="calculateResult()">=</button>
+        </div>
+    </div>
+
+    <script>
+        const display = document.getElementById('display');
+
+        function appendValue(value) {
+            display.value += value;
+        }
+
+        function clearDisplay() {
+            display.value = '';
+        }
+
+        function calculateResult() {
+            try {
+                const result = eval(display.value);
+                if (!isFinite(result)) {
+                    throw new Error("Math error");
+                }
+                display.value = result;
+            } catch (error) {
+                display.value = "Error";
+                setTimeout(clearDisplay, 1500);
+            }
+        }
+
+        document.addEventListener('keydown', (event) => {
+            const validKeys = '0123456789.+-*/';
+            if (validKeys.includes(event.key)) {
+                appendValue(event.key);
+            } else if (event.key === 'Enter') {
+                calculateResult();
+            } else if (event.key === 'Backspace') {
+                display.value = display.value.slice(0, -1);
+            } else if (event.key === 'Escape') {
+                clearDisplay();
+            }
+        });
+    </script>
+</body>
+
+</html>
