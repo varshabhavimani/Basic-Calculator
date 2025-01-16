@@ -16,7 +16,7 @@ Open the index.html file in any modern web browser (Google Chrome, Firefox, etc.
 bash
 Copy code
 git clone https://github.com/varshabhavimani/Basic-Calculator.git
-cd basic-calculator
+cd Basic-Calculator
 
 # Open index.html in a browser.
 
